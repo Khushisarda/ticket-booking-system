@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Ticket Booking System{% endblock %}
+
+{% block content %}
+  <h1>Welcome to the Ticket Booking System</h1>
+  <p><a href="{% url 'show_list' %}">View All Shows</a></p>
+
+  {% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+  {% else %}
+    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+  {% endif %}
+{% endblock %}
+
+{% if user.is_authenticated %}
+  <a href="{% url 'booking_history' %}">My Booking History</a>
+{% endif %}

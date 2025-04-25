@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Show{% endblock %}
+
+{% block content %}
+  <h1>Add New Show</h1>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div>
+      <label for="title">Title:</label><br>
+      <input type="text" name="title" id="title" required>
+    </div>
+    <br>
+
+    <div>
+      <label for="description">Description:</label><br>
+      <textarea name="description" id="description" rows="4" required></textarea>
+    </div>
+    <br>
+
+    <div>
+      <label for="datetime">Date &amp; Time:</label><br>
+      <input type="datetime-local" name="datetime" id="datetime" required>
+    </div>
+    <br>
+
+    <div>
+      <label for="total_seats">Total Seats:</label><br>
+      <input type="number" name="total_seats" id="total_seats" min="1" required>
+    </div>
+    <br>
+  <div>
+  <label for="image_url">Image URL:</label><br>
+  <input type="url" name="image_url" id="image_url" value="{{ show.image_url }}" required>
+</div>
+
+    <button type="submit">Create Show</button>
+  </form>
+
+  <p><a href="{% url 'admin_dashboard' %}">← Back to Dashboard</a></p>
+{% endblock %}

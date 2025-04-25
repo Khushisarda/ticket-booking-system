@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Available Shows{% endblock %}
+
+{% block content %}
+  <h1>Available Shows</h1>
+
+  {% if shows %}
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+      {% for show in shows %}
+        <div style="border: 1px solid #ccc; padding: 16px; width: 300px; border-radius: 10px; background-color: #f9f9f9;">
+          {% if show.image_url %}
+            <img src="{{ show.image_url }}" alt="{{ show.title }}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+          {% else %}
+            <div style="width: 100%; height: 180px; background-color: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+              <span>No Image</span>
+            </div>
+          {% endif %}
+          <h3 style="margin-top: 10px;">{{ show.title }}</h3>
+          <p><strong>Date:</strong> {{ show.datetime|date:"M d, Y" }} at {{ show.datetime|time:"H:i" }}</p>
+          <p><strong>Seats Left:</strong> {{ show.available_seats }}</p>
+          <a href="{% url 'book_show' show.id %}" style="display: inline-block; padding: 8px 12px; background-color: #4CAF50; color: white; border-radius: 4px; text-decoration: none;">Book Tickets</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No shows available.</p>
+  {% endif %}
+
+  <p style="margin-top: 20px;"><a href="{% url 'home' %}">← Back to Home</a></p>
+{% endblock %}

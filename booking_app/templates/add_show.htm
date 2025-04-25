@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Show{% endblock %}
+{% block content %}
+  <h1>Add New Show</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label>Title: <input type="text" name="title" required></label><br><br>
+    <label>Description:<br>
+      <textarea name="description" rows="4" required></textarea>
+    </label><br><br>
+    <label>Date & Time:
+      <input type="datetime-local" name="datetime" required>
+    </label><br><br>
+    <label>Total Seats:
+      <input type="number" name="total_seats" min="1" required>
+    </label><br><br>
+    <button type="submit">Create Show</button>
+  </form>
+  <p><a href="{% url 'admin_dashboard' %}">← Back to Dashboard</a></p>
+{% endblock %}

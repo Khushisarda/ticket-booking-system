@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+  <div class="container" style="max-width: 800px; margin: auto;">
+    <h1 class="mb-4" style="text-align:center;">🎟️ My Booking History</h1>
+
+    {% if bookings %}
+      {% for booking in bookings %}
+        <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 2px 2px 8px rgba(0,0,0,0.05);">
+          <h4 style="margin-bottom: 10px;">{{ booking.show.title }}</h4>
+          <p><strong>Date:</strong> {{ booking.show.datetime|date:"M d, Y" }} at {{ booking.show.datetime|time:"H:i" }}</p>
+          <p><strong>Seats Booked:</strong> {{ booking.seats_booked }}</p>
+          <p><strong>Booking Time:</strong> {{ booking.booking_time|date:"M d, Y H:i" }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">You haven’t booked any shows yet.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}" style="text-decoration: none; display: inline-block; margin-top: 20px; color: #6c63ff;">
+      ← Back to Home
+    </a>
+  </div>
+{% endblock %}

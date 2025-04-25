@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Ticket Booking System{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2c3e50;
+      --accent-color: #e74c3c;
+      --light-bg: #f8f9fa;
+      --dark-text: #343a40;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+    }
+    
+    .navbar {
+      background-color: var(--secondary-color);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1rem 2rem;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: white !important;
+      font-size: 1.5rem;
+    }
+    
+    .navbar-brand i {
+      color: var(--accent-color);
+      margin-right: 0.5rem;
+    }
+    
+    .nav-link {
+      color: rgba(255,255,255,0.8) !important;
+      font-weight: 500;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: white !important;
+      transform: translateY(-2px);
+    }
+    
+    .active-link {
+      color: white !important;
+      border-bottom: 2px solid var(--accent-color);
+    }
+    
+    .main-content {
+      min-height: calc(100vh - 160px);
+      padding: 2rem 0;
+    }
+    
+    .section-heading {
+      position: relative;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+    
+    .section-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .btn-primary:hover {
+      background-color: #2980b9;
+      border-color: #2980b9;
+    }
+    
+    .btn-outline-light:hover {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+    
+    .footer {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 1.5rem 0;
+      margin-top: 2rem;
+    }
+    
+    .footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer a:hover {
+      color: white;
+    }
+    
+    .user-badge {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+    
+    .card {
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.5rem 1rem;
+      }
+      
+      .navbar-brand {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <i class="fas fa-ticket-alt"></i> TicketMaster
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'show_list' %}">Shows</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'booking_history' %}">My Bookings</a>
+          </li>
+          {% endif %}
+        </ul>
+        <div class="navbar-nav">
+          {% if user.is_authenticated %}
+            <span class="nav-item d-flex align-items-center me-3">
+              <span class="text-light">Hello, {{ user.username }}</span>
+              {% if user.is_staff %}
+                <span class="user-badge">Staff</span>
+              {% endif %}
+            </span>
+            <a class="nav-link btn btn-outline-light btn-sm px-3" href="{% url 'logout' %}">
+              <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </a>
+          {% else %}
+            <a class="nav-link btn btn-outline-light btn-sm px-3 me-2" href="{% url 'login' %}">
+              <i class="fas fa-sign-in-alt me-1"></i> Login
+            </a>
+            <a class="nav-link btn btn-primary btn-sm px-3" href="{% url 'register' %}">
+              <i class="fas fa-user-plus me-1"></i> Register
+            </a>
+          {% endif %}
+          
+          {% if user.is_staff %}
+            <a class="nav-link ms-2" href="/admin/" title="Django Admin">
+              <i class="fas fa-cog"></i>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5><i class="fas fa-ticket-alt"></i> TicketMaster</h5>
+          <p class="small">Your one-stop destination for booking tickets to the best shows and events.</p>
+        </div>
+        <div class="col-md-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'show_list' %}">Shows</a></li>
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'booking_history' %}">My Bookings</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Connect With Us</h5>
+          <div class="d-flex">
+            <a href="#" class="me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
+            <a href="#" class="me-3"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in fa-lg"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 text-center">
+          <hr class="mt-2 mb-3" style="background-color: rgba(255,255,255,0.2);">
+          <p class="small mb-0">&copy; 2025 TicketMaster. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Add active class to current page nav link
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentLocation = window.location.pathname;
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentLocation || 
+            (href.includes('show_list') && currentLocation.includes('show')) ||
+            (href.includes('booking_history') && currentLocation.includes('booking'))) {
+          link.classList.add('active-link');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

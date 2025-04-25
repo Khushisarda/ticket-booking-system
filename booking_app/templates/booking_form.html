@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Book {{ show.title }}{% endblock %}
+
+{% block content %}
+  <h1>Book: {{ show.title }}</h1>
+  <p>Date: {{ show.datetime|date:"M d, Y" }} at {{ show.datetime|time:"H:i" }}</p>
+  <p>Seats Available: {{ show.available_seats }}</p>
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="seats">Number of Seats:</label>
+    <input type="number" name="seats_booked" min="1" max="{{ show.available_seats }}" required>
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <p><a href="{% url 'show_list' %}">← Back to Shows</a></p>
+{% endblock %}

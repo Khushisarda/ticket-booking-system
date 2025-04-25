@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <p>Welcome, {{ request.user.username }}!</p>
+
+    <h2>All Bookings</h2>
+    <table border="1">
+        <tr>
+            <th>User</th>
+            <th>Show</th>
+            <th>Seats Booked</th>
+            <th>Booking Time</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.user.username }}</td>
+            <td>{{ booking.show.title }}</td>
+            <td>{{ booking.seats_booked }}</td>
+            <td>{{ booking.booking_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{% url 'home' %}">← Back to Home</a></p>
+</body>
+</html>

@@ -1,4 +1,7 @@
-# 🎟️ Ticket Booking Management System
+# 🎟️ Ticket Booking Management System(Assignment 2)
+
+please watch the video
+https://github.com/user-attachments/assets/fdd13d5b-6645-4d3a-afcf-5f14b68f45b1
 
 ## 📌 Project Overview  
 The **Ticket Booking Management System** is a web-based application built with Django. It allows users to register, view available shows, and book tickets. Key features include secure user authentication, a custom admin panel for managing shows and bookings, and a personalized booking history page for users.

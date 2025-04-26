@@ -44,7 +44,7 @@ DevOps: Docker, Docker Compose, Jenkins
 
 Version Control: Git & GitHub
 
-🐳 Docker Notes
+### 🐳 Docker Notes
 The application runs in a multi-container Docker environment:
 
 web: Django web application
@@ -59,15 +59,12 @@ Docker volumes are used for persistent database storage
 A custom Docker network ensures secure internal communication
 
 Key Commands
-bash
-Copy
-Edit
-# Start containers
+#### Start containers
 docker-compose up --build
 
-# Stop containers
+#### Stop containers
 docker-compose down
-🧪 Jenkins CI/CD Notes
+## 🧪 Jenkins CI/CD Notes
 A Jenkinsfile is provided to automate the CI/CD pipeline.
 
 Pipeline Stages
@@ -83,11 +80,10 @@ Configure GitHub webhooks to trigger Jenkins jobs on push
 Jenkins requires the Docker Pipeline and Git plugins
 
 Jenkins agent should have Docker and Docker Compose installed
-
+```bash
 Sample Jenkinsfile
 groovy
-Copy
-Edit
+
 pipeline {
     agent any
     stages {

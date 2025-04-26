@@ -17,7 +17,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/Khushisarda/ticket-booking.git
 cd ticket-booking
-
+```
 ## 🔧 Build and Run the Containers
 
 ```bash

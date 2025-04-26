@@ -15,5 +15,10 @@ The **Ticket Booking Management System** is a web-based application built with D
 
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ticket-booking.git
+git clone https://github.com/Khushisarda/ticket-booking.git
 cd ticket-booking
+
+## 🔧 Build and Run the Containers
+
+```bash
+docker-compose up --build
